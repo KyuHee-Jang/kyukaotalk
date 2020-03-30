@@ -5,12 +5,12 @@ module.exports = {
     es6: true,
   },
   extends: [
-    'airbnb-base',
+    "airbnb-base",
     "eslint:recommended",
     "plugin:node/recommended",
     "plugin:security/recommended"
   ],
-  "plugins": [
+  plugins: [
     "security"
   ],
   globals: {
