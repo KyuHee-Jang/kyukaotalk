@@ -7,6 +7,9 @@
     "jest": "jest"
   },
   "dependencies": {
+    "acorn": "^7.1.1",
+    "clean-css": "^4.2.3",
+    "constantinople": "^4.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "eslint-plugin-jest": "^23.8.2",
@@ -14,6 +17,7 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "kind-of": "^6.0.3",
     "mongoose": "^5.9.9",
     "morgan": "~1.9.1",
     "socket.io": "^2.3.0"
