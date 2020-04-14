@@ -3,12 +3,14 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 
 const app = express();
+
 
 app.io = require('socket.io')();
 
@@ -17,11 +19,20 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 
+mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true });
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error: '));
+db.once('open', () => {
+  console.log('connection success');
+});
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -43,7 +54,7 @@ app.use((err, req, res) => {
 });
 
 // socket server
-app.io.on('connection', (socket) => {
+app.io.on('connection', () => {
   console.log('socketio user connected...');
 });
 
