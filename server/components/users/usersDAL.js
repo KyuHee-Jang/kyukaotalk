@@ -1,7 +1,7 @@
-const UserModel = require('./userModel');
+const UserModel = require('./UserModel');
 
 
-module.exports.create = async (userId, password) => {
+module.exports.createUser = async (userId, password) => {
   try {
     const user = await new UserModel(
       userId,
@@ -13,7 +13,7 @@ module.exports.create = async (userId, password) => {
   }
 };
 
-module.exports.read = async (userId) => {
+module.exports.readUser = async (userId) => {
   let user;
   try {
     user = await UserModel.findOne({ userId });
@@ -27,7 +27,7 @@ module.exports.read = async (userId) => {
   return user;
 };
 
-module.exports.update = async (userId, password) => {
+module.exports.updateUser = async (userId, password) => {
   let user;
   try {
     user = await UserModel.findOneAndUpdate({ userId }, { $set: { password } });
@@ -37,7 +37,7 @@ module.exports.update = async (userId, password) => {
   return user;
 };
 
-module.exports.delete = async (userId) => {
+module.exports.deleteUser = async (userId) => {
   let user;
   try {
     user = await UserModel.findOneAndDelete({ userId });

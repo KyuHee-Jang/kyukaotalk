@@ -1,30 +1,30 @@
 const express = require('express');
 
-const { tokenVerify } = require('../auth/tokenVerify');
+const { verifyToken } = require('../auth/verifyToken');
 
 const usersService = require('./usersService');
 
 const router = express.Router();
 
 
-router.post('/', tokenVerify, async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
   let user;
   try {
-    const { email } = req.body;
+    const { userId } = req.body;
     const { password } = req.body;
-    user = await usersService.postUser(email, password);
+    user = await usersService.postUser(userId, password);
   } catch (err) {
     console.log(err);
   }
   return res.json(user);
 });
 
-router.put('/', tokenVerify, async (req, res) => {
+router.put('/', verifyToken, async (req, res) => {
   let user;
   try {
-    const email = req.decoded.userId;
+    const { userId } = req.decoded;
     const { password } = req.body;
-    user = usersService.updateUser(email, password);
+    user = usersService.updateUser(userId, password);
   } catch (err) {
     console.log(err);
   }
@@ -32,11 +32,11 @@ router.put('/', tokenVerify, async (req, res) => {
 });
 
 
-router.delete('/', tokenVerify, async (req, res) => {
+router.delete('/', verifyToken, async (req, res) => {
   let user;
   try {
-    const email = req.decoded.userId;
-    user = await usersService.deleteUser(email);
+    const { userId } = req.decoded;
+    user = await usersService.deleteUser(userId);
   } catch (err) {
     console.log(err);
   }

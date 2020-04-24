@@ -2,35 +2,38 @@ const passwordHash = require('password-hash');
 
 const usersDAL = require('./usersDAL');
 
-
-module.exports.postUser = async (email, password) => {
+async function postUser(userId, password) {
   let user;
   try {
     const hashedPassword = passwordHash.generate(password);
-    user = await usersDAL.create(email, hashedPassword);
+    user = await usersDAL.createUser(userId, hashedPassword);
   } catch (err) {
     console.log(err);
   }
   return user;
-};
+}
 
-module.exports.updateUser = async (email, password) => {
+async function updateUser(userId, password) {
   let user;
   try {
     const hashedPassword = passwordHash.generate(password);
-    user = await usersDAL.update(email, hashedPassword);
+    user = await usersDAL.updateUser(userId, hashedPassword);
   } catch (err) {
     console.log(err);
   }
   return user;
-};
+}
 
-module.exports.deleteUser = async (email) => {
+async function deleteUser(userId) {
   let user;
   try {
-    user = await usersDAL.delete(email);
+    user = await usersDAL.deleteUser(userId);
   } catch (err) {
     console.log(err);
   }
   return user;
-};
+}
+
+module.exports.postUser = postUser;
+module.exports.updateUser = updateUser;
+module.exports.deleteUser = deleteUser;
