@@ -7,26 +7,26 @@ const authService = require('./authService');
 const router = express.Router();
 
 router.post('/login', verifyToken, async (req, res) => {
+  const { userId } = req.body;
+  const { password } = req.body;
   let token;
   try {
-    const { userId } = req.body;
-    const { password } = req.body;
-    token = authService.makeToken(userId);
+    token = authService.makeToken(userId, password);
   } catch (err) {
     console.log(err);
   }
   return res.json({ token });
 });
 
-router.posdt('/refresh', verifyToken, async (req, res) => {
+router.post('/refresh', verifyToken, async (req, res) => {
+  const { userId } = req.decoded;
   let token;
   try {
-    const { userId } = req.decoded;
     token = authService.makeToken(userId);
   } catch (err) {
     console.log(err);
   }
-  return token;
-})
+  return res.json({ token });
+});
 
 module.exports = router;

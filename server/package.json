@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "jest": "jest"
+    "test": "jest"
   },
   "dependencies": {
     "acorn": "^7.1.1",
