@@ -7,38 +7,38 @@ const usersService = require('./usersService');
 const router = express.Router();
 
 
-router.post('/', verifyToken, async (req, res) => {
+router.post('/', verifyToken, async (req, res, next) => {
+  const { userId } = req.body;
+  const { password } = req.body;
   let user;
   try {
-    const { userId } = req.body;
-    const { password } = req.body;
     user = await usersService.postUser(userId, password);
   } catch (err) {
-    console.log(err);
+    return next(err);
   }
   return res.json(user);
 });
 
-router.put('/', verifyToken, async (req, res) => {
+router.put('/', verifyToken, async (req, res, next) => {
+  const { userId } = req.decoded;
+  const { password } = req.body;
   let user;
   try {
-    const { userId } = req.decoded;
-    const { password } = req.body;
     user = usersService.updateUser(userId, password);
   } catch (err) {
-    console.log(err);
+    return next(err);
   }
   return res.json(user);
 });
 
 
-router.delete('/', verifyToken, async (req, res) => {
+router.delete('/', verifyToken, async (req, res, next) => {
+  const { userId } = req.decoded;
   let user;
   try {
-    const { userId } = req.decoded;
     user = await usersService.deleteUser(userId);
   } catch (err) {
-    console.log(err);
+    return next(err);
   }
   return res.json(user);
 });
