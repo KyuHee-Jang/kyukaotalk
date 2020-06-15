@@ -8,7 +8,7 @@ async function postUser(userId, password) {
     const hashedPassword = passwordHash.generate(password);
     user = await usersDAL.createUser(userId, hashedPassword);
   } catch (err) {
-    console.log(err);
+    throw err;
   }
   return user;
 }
@@ -19,7 +19,7 @@ async function updateUser(userId, password) {
     const hashedPassword = passwordHash.generate(password);
     user = await usersDAL.updateUser(userId, hashedPassword);
   } catch (err) {
-    console.log(err);
+    throw err;
   }
   return user;
 }
@@ -29,7 +29,7 @@ async function deleteUser(userId) {
   try {
     user = await usersDAL.deleteUser(userId);
   } catch (err) {
-    console.log(err);
+    throw err;
   }
   return user;
 }
